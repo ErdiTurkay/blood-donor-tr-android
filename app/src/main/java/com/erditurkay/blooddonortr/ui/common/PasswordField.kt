@@ -1,5 +1,6 @@
 package com.erditurkay.blooddonortr.ui.common
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -8,17 +9,20 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import com.erditurkay.blooddonortr.R
 
 @Composable
-fun PasswordField() {
-    // rememberSaveable, ekran döndüğünde falan korur.
-    var password by rememberSaveable { mutableStateOf("") }
+fun PasswordField(
+    modifier: Modifier = Modifier.fillMaxWidth(),
+    input: MutableState<TextFieldValue>
+) {
     var visibility by remember { mutableStateOf(false) }
 
     val icon = if (visibility) {
@@ -28,10 +32,11 @@ fun PasswordField() {
     }
 
     OutlinedTextField(
-        value = password,
-        onValueChange = { password = it },
+        modifier = modifier,
+        value = input.value,
+        onValueChange = { input.value = it },
         label = {
-            Text(text = "Password")
+            Text(text = stringResource(id = R.string.password))
         },
         leadingIcon = {
             Icon(
